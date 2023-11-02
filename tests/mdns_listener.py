@@ -5,7 +5,6 @@ from zeroconf import ServiceBrowser, Zeroconf
 
 
 class MdnsListener:
-
     def remove_service(self, zeroconf, type, name):
         print("removed: %s" % (name,))
 

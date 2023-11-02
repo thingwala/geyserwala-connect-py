@@ -1,13 +1,12 @@
 ####################################################################################
 # Copyright (c) 2023 Thingwala                                                     #
 ####################################################################################
+import asyncio
 import logging
 import sys
-import asyncio
 
 from thingwala.geyserwala.connect.aio.client import GeyserwalaClientAsync
 from thingwala.geyserwala.connect.aio.discovery import GeyserwalaDiscoveryAsync
-
 
 root = logging.getLogger()
 root.setLevel(logging.DEBUG)

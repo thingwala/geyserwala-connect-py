@@ -1,14 +1,12 @@
 ####################################################################################
 # Copyright (c) 2023 Thingwala                                                     #
 ####################################################################################
-import logging
 import asyncio
-
 from dataclasses import dataclass
+import logging
 
-from zeroconf.asyncio import AsyncServiceBrowser, AsyncZeroconf
 from zeroconf import IPVersion
-
+from zeroconf.asyncio import AsyncServiceBrowser, AsyncZeroconf
 
 logger = logging.getLogger(__name__)
 

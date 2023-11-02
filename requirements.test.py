@@ -1,6 +1,3 @@
-black
-flake8
-pylint
 pytest
 pytest-asyncio
 pytest-cov

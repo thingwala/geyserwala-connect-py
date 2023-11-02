@@ -10,4 +10,4 @@ from thingwala.geyserwala.connect.aio.discovery import GeyserwalaDiscoveryAsync
 async def test_discovery():
     dsc = GeyserwalaDiscoveryAsync()
     res = await dsc.mdns_discover()
-    res[0].properties['id']
+    res[0].properties["id"]

@@ -1,26 +1,25 @@
 ####################################################################################
 # Copyright (c) 2023 Thingwala                                                     #
 ####################################################################################
-import logging
 import asyncio
-import time
-
 from contextlib import asynccontextmanager
+from copy import deepcopy
+import logging
+import time
 
 import aiohttp
 
-from thingwala.geyserwala.connect.errors import Unauthorized, RequestError
 from thingwala.geyserwala.connect.const import (
-    GEYSERWALA_MODES,
-    GEYSERWALA_MODE_SETPOINT,
-    GEYSERWALA_MODE_TIMER,
-    GEYSERWALA_MODE_SOLAR,
     GEYSERWALA_MODE_HOLIDAY,
+    GEYSERWALA_MODE_SETPOINT,
+    GEYSERWALA_MODE_SOLAR,
     GEYSERWALA_MODE_STANDBY,
+    GEYSERWALA_MODE_TIMER,
+    GEYSERWALA_MODES,
     GEYSERWALA_SETPOINT_TEMP_MAX,
     GEYSERWALA_SETPOINT_TEMP_MIN,
 )
-
+from thingwala.geyserwala.connect.errors import RequestError, Unauthorized
 
 logger = logging.getLogger(__name__)
 
@@ -85,9 +84,12 @@ class GeyserwalaClientAsync:
         if not rsp:
             self._session._token = None
             return False
-        if rsp["success"] is True:
-            self._session._token = rsp["token"]
-            return True
+        try:
+            if rsp["success"] is True:
+                self._session._token = rsp["token"]
+                return True
+        except KeyError as ex:
+            logger.warning("Malformed response to auth request: %s", ex)
         return False
 
     async def logout(self):
@@ -291,10 +293,11 @@ class GeyserwalaClientAsync:
         return await self._set_value("lowpower-enable", on)
 
     async def add_timer(self, timer: dict):
+        timer = deepcopy(timer)
         timer["id"] = 0
         async with self._auth():
             ret = await self._json_req("POST", "api/value/timer", json=timer)
-            return ret
+            return ret["id"]
 
     async def list_timers(self):
         async with self._auth():
@@ -316,4 +319,4 @@ class GeyserwalaClientAsync:
     async def delete_timer(self, idx: int):
         async with self._auth():
             ret = await self._json_req("DELETE", f"api/value/timer/{idx}")
-            return ret
+            return ret["success"] is True and ret["id"] == idx

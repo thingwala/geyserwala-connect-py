@@ -2,20 +2,20 @@
 # Copyright (c) 2023 Thingwala                                                     #
 ####################################################################################
 import asyncio
-import pytest
 import os
 
-from thingwala.geyserwala.connect.aio.client import GeyserwalaClientAsync
+import pytest
 
+from thingwala.geyserwala.connect.aio.client import GeyserwalaClientAsync
 from thingwala.geyserwala.connect.const import (
-    GEYSERWALA_MODE_TIMER,
     GEYSERWALA_MODE_HOLIDAY,
+    GEYSERWALA_MODE_TIMER,
 )
 
 
 @pytest.fixture
 def ip():
-    return os.environ['TEST_IP']
+    return os.environ["TEST_IP"]
 
 
 @pytest.mark.asyncio
@@ -41,8 +41,8 @@ async def test_client(ip):
     gw.external_demand
     gw.lowpower_enable
 
-    gw.has_feature('f-collector')
-    gw.has_feature('f-foo')
+    gw.has_feature("f-collector")
+    gw.has_feature("f-foo")
 
     await gw.set_mode(GEYSERWALA_MODE_TIMER)
     await gw.set_mode("FOO")
@@ -58,4 +58,3 @@ async def test_client(ip):
     await gw.set_external_demand(True)
     await gw.set_lowpower_enable(True)
     await gw.set_external_demand(False)
-

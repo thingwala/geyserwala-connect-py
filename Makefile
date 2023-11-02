@@ -2,7 +2,9 @@ PYPI_USER=thingwala
 
 setup:
 	pip install -r requirements.txt
-	pip install -r requirements_dev.txt
+	pip install -r requirements.dev.txt
+	pip install -r requirements.test.txt
+	pre-commit install
 
 check:
 	flake8 ./thingwala/geyserwala/connect --ignore E501
