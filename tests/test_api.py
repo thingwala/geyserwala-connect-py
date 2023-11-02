@@ -42,12 +42,12 @@ async def test_basic():
             "mode": "SOLAR",
             "external-demand": False,
             "external-setpoint": 55,
-            "lowpower-enable": False,
+            "external-disable": False,
             "id": "1234567890ABCDEF",
             "name": "Geyserwala",
             "version": "20231008-abcdef",
             "features": {
-                "f-admin": True,
+                "f-local": True,
                 "f-timers": True,
                 "f-collector": True,
                 "f-pv-panel": False,
@@ -83,7 +83,7 @@ async def test_basic():
 
         assert gw.external_setpoint == 55
         assert gw.external_demand == False
-        assert gw.lowpower_enable == False
+        assert gw.external_disable == False
 
         assert gw.has_feature("f-collector") is True
         assert gw.has_feature("f-foo") is False
@@ -105,7 +105,7 @@ async def test_basic():
         assert await gw.set_external_setpoint(27) is False
         assert await gw.set_external_setpoint(99) is False
         assert await gw.set_external_demand(True) is True
-        assert await gw.set_lowpower_enable(True) is True
+        assert await gw.set_external_disable(True) is True
         assert await gw.set_external_demand(False) is True
 
         TIMER1 = {
@@ -214,3 +214,5 @@ async def test_logout():
         response.json = json_mode
 
         assert await gw.logout() is False
+
+print('foo')

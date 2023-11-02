@@ -1,0 +1,47 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thingwala-geyserwala-connect"
+version = "0.0.7"
+description = "Python bindings to the Geyserwala Connect REST API"
+readme = "README.md"
+authors = [{ name = "Thingwala", email = "opensource@thingwala.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+]
+keywords = ["thingwala", "geyserwala"]
+dependencies = [
+    "aiohttp",
+    "zeroconf"
+]
+requires-python = ">=3.8"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "pylint",
+    "pre-commit",
+    "isort",
+]
+test = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+]
+publish = [
+    "build",
+    "twine",
+]
+
+[project.urls]
+Homepage = "https://github.com/thingwala/geyserwala-connect-py"
+
+[project.scripts]
+geyserwala-connect = "thingwala.geyserwala.connect.aio.cli:cli"

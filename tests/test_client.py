@@ -39,7 +39,7 @@ async def test_client(ip):
 
     gw.external_setpoint
     gw.external_demand
-    gw.lowpower_enable
+    gw.external_disable
 
     gw.has_feature("f-collector")
     gw.has_feature("f-foo")
@@ -56,5 +56,5 @@ async def test_client(ip):
     await gw.set_external_setpoint(56)
     await gw.set_external_setpoint(99)
     await gw.set_external_demand(True)
-    await gw.set_lowpower_enable(True)
+    await gw.set_external_disable(True)
     await gw.set_external_demand(False)

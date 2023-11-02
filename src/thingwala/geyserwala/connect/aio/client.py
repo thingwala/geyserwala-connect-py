@@ -55,7 +55,7 @@ class GeyserwalaClientAsync:
             "mode",
             "external-demand",
             "external-setpoint",
-            "lowpower-enable",
+            "external-disable",
         ]
         self._last_status_update = 0
         self._cache_time = 0.5
@@ -150,7 +150,7 @@ class GeyserwalaClientAsync:
             raise RequestError() from ex
         except Exception as ex:
             logger.exception(
-                "Non-aiohttp exception occured:  %s", getattr(ex, "__dict__", {})
+                "Non-aiohttp exception occured:  %s", ex
             )
             raise RequestError from ex
         if status == 401:
@@ -271,7 +271,7 @@ class GeyserwalaClientAsync:
     def external_demand(self):
         return self._values.get("external-demand", None)
 
-    async def set_external_demand(self, on: bool):
+    async def set_external_demand(self, on: int):
         return await self._set_value("external-demand", on)
 
     @property
@@ -286,11 +286,11 @@ class GeyserwalaClientAsync:
         return await self._set_value("external-setpoint", external_setpoint)
 
     @property
-    def lowpower_enable(self):
-        return self._values.get("lowpower-enable", None)
+    def external_disable(self):
+        return self._values.get("external-disable", None)
 
-    async def set_lowpower_enable(self, on: bool):
-        return await self._set_value("lowpower-enable", on)
+    async def set_external_disable(self, on: int):
+        return await self._set_value("external-disable", on)
 
     async def add_timer(self, timer: dict):
         timer = deepcopy(timer)
